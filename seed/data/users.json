@@ -1,26 +1,29 @@
 [
-  {
-    "username": "normanhaze",
-    "password": "password123"
-  },
-  {
-    "username": "crylittlesister",
-    "password": "database"
-  },
-  {
-    "username": "rosieamphlett",
-    "password": "something"
-  },
-  {
-    "username": "robd33",
-    "password": "mapsmapsmaps"
-  },
-  {
-    "username": "louillustrator",
-    "password": "lunchbox"
-  },
-  {
-    "username": "sylfie",
-    "password": "ILoveReactNative"
-  }
+
+    {
+        "username": "normanhaze",
+        "password": "password123"
+    },
+    {
+        "username": "crylittlesister",
+        "password": "database"
+    },
+    {
+        "username": "rosieamphlett",
+        "password": "something"
+    },
+    {
+        "username": "robd33",
+        "password": "mapsmapsmaps"
+    },
+    
+    {
+        "username": "Louillustrator",
+        "password": "lunchbox"
+    },
+    {
+        "username": "sylfie",
+        "password": "ILoveReactNative"
+    }
 ]
+
