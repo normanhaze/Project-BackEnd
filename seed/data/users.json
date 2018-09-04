@@ -1,26 +1,27 @@
 [
     {
-        "username": "Normanhaze",
+        "username": "normanhaze",
         "password": "password123"
     },
     {
-        "username": "CryLittleSister",
+        "username": "crylittlesister",
         "password": "database"
     },
     {
-        "username": "RosieAmphlett",
+        "username": "rosieamphlett",
         "password": "something"
     },
     {
-        "username": "RobD33",
+        "username": "robd33",
         "password": "mapsmapsmaps"
     },
+    
     {
-        "username": "LouIllustrator",
+        "username": "Louillustrator",
         "password": "lunchbox"
     },
     {
-        "username": "Sylfie",
+        "username": "sylfie",
         "password": "ILoveReactNative"
     }
 ]

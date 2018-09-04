@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const RouteSchema = new Schema({
+const journeySchema = new Schema({
     user: {
         type: String,
         ref: 'users',
@@ -31,8 +31,8 @@ const RouteSchema = new Schema({
     image: String,
     previousVersions: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'routes'
+        ref: 'journeys'
     }]
 });
 
-module.exports = mongoose.model('routes', RouteSchema);
+module.exports = mongoose.model('journeys', journeySchema);
