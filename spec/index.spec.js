@@ -5,14 +5,14 @@ const request = require("supertest")(app);
 const seedDB = require("../seed/seed.js");
 const mongoose = require("mongoose");
 const userData = require("../seed/data/users");
-const routeData = require("../seed/data/routes");
+const journeyData = require("../seed/data/journies");
 
 describe("/API", () => {
-  let routeDocs, userDocs;
+  let journeyDocs, userDocs;
   beforeEach(() => {
-    return seedDB(userData, routeData)
+    return seedDB(userData, journeyData)
       .then(docs => {
-        [userDocs, routeDocs] = docs;
+        [userDocs, journeyDocs] = docs;
       })
       .catch(console.log);
   });
@@ -36,20 +36,20 @@ describe("/API", () => {
       .then(res => expect(res.body.message).to.equal("Page Not Found"));
   });
 });
-describe("/routes", () => {
-  it("GET / responds with all routes", () => {
+describe("/journies", () => {
+  it("GET / responds with all journies", () => {
     return request
-      .get("/api/routes")
+      .get("/api/journies")
       .expect(200)
       .then(res => {
-        expect(res.body.routes.length).to.equal(3);
-        expect(res.body.routes[1]).to.have.all.keys(
+        expect(res.body.journies.length).to.equal(3);
+        expect(res.body.journies[1]).to.have.all.keys(
           "user",
           "route",
           "_id",
           "__v"
         );
-        expect(res.body.routes[2].route[0]).to.have.all.keys(
+        expect(res.body.journies[2].journey[0]).to.have.all.keys(
           "LatLng",
           "strokeWidth",
           "strokeColor",
@@ -57,7 +57,25 @@ describe("/routes", () => {
         );
       });
   });
-  it("GET /:route_id", () => {
+  it("GET /:journey_id responds with the correct journey", () => {
+    return request
+      .get(`/api/journies/${journeyDocs[1]._id}`)
+      .expect(200)
+      .then(res => {
+        expect(res.body.journey).to.have.all.keys(
+          "user",
+          "route",
+          "_id",
+          "__v"
+        );
+        expect(res.body.journey.user).to.equal("CryLittleSister");
+      });
+  });
+  it("GET /:username returns all journies made by a particular user", () => {
+    return request
+      .get(`/api/journies/`)
+      .expect(200)
+      .then(res => {});
     expect().to.equal();
   });
 });
