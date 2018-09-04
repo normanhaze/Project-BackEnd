@@ -35,181 +35,190 @@ describe("/API", () => {
       .expect(404)
       .then(res => expect(res.body.message).to.equal("Page Not Found"));
   });
-});
 
-describe("/journeys", () => {
-  it("GET / responds with all journeys", () => {
-    return request
-      .get("/api/journeys")
-      .expect(200)
-      .then(res => {
-        expect(res.body.journeys.length).to.equal(3);
-        expect(res.body.journeys[1]).to.have.all.keys(
-          "user",
-          "route",
-          "_id",
-          "__v"
-        );
-        expect(res.body.journeys[2].journey[0]).to.have.all.keys(
-          "LatLng",
-          "strokeWidth",
-          "strokeColor",
-          "newSection"
-        );
-      });
-  });
-  it("GET /:journey_id responds with the correct journey", () => {
-    return request
-      .get(`/api/journeys/${journeyDocs[2]._id}`)
-      .expect(200)
-      .then(res => {
-        expect(res.body.journey).to.have.all.keys(
-          "user",
-          "route",
-          "_id",
-          "__v"
-        );
-        expect(res.body.journey.user).to.equal("CryLittleSister");
-      });
-  });
-  it("GET /journey_id responds with a 404 when inputting an incorrect journey id", () => {
-    return request
-      .get(`/api/journeys/${userDocs[1]._id}`)
-      .expect(404)
-      .then(res => {
-        expect(res.body.message).to.equal(
-          `journey ${userDocs[1]._id} not found`
-        );
-      });
-  });
-  it("GET /:journey_id responds with a 400 when inputting an incorrect journey id format", () => {
-    return request
-      .get(`/api/journeys/myJourney`)
-      .expect(400)
-      .then(res => {
-        expect(res.body.message).to.equal("invalid ID format");
-      });
-  });
+  describe("/journeys", () => {
+    it("GET / responds with all journeys", () => {
+      return request
+        .get("/api/journeys")
+        .expect(200)
+        .then(res => {
+          expect(res.body.allJourneys.length).to.equal(4);
+          expect(res.body.allJourneys[1]).to.have.all.keys(
+            "user",
+            "route",
+            "_id",
+            "__v",
+            "previousVersions"
+          );
+          expect(res.body.allJourneys[3].route[0]).to.have.all.keys(
+            "latLng",
+            "strokeWidth",
+            "strokeColor",
+            "newSection",
+            "_id"
+          );
+        });
+    });
+    it("GET /:journey_id responds with the correct journey", () => {
+      return request
+        .get(`/api/journeys/${journeyDocs[2]._id}`)
+        .expect(200)
+        .then(res => {
+          expect(res.body.journey).to.have.all.keys(
+            "user",
+            "route",
+            "_id",
+            "__v",
+            "previousVersions"
+          );
+          expect(res.body.journey.user).to.equal("crylittlesister");
+        });
+    });
+    it("GET /:journey_id responds with a 404 when inputting an incorrect journey id", () => {
+      return request
+        .get(`/api/journeys/${userDocs[1]._id}`)
+        .expect(404)
+        .then(res => {
+          expect(res.body.message).to.equal(
+            `Journey ${userDocs[1]._id} not found`
+          );
+        });
+    });
+    it("GET /:journey_id responds with a 400 when inputting an incorrect journey id format", () => {
+      return request
+        .get(`/api/journeys/myJourney`)
+        .expect(400)
+        .then(res => {
+          expect(res.body.message).to.equal(
+            'Cast to ObjectId failed for value "myJourney" at path "_id" for model "journeys"'
+          );
+        });
+    });
 
-  it("POST / posts a new journey", () => {
-    return request
-      .post(`/api/journeys/`)
-      .send({
-        user: "normanhaze",
-        route: [
-          {
-            latLng: {
-              latitude: 53.4868444,
-              longitude: -2.2407841
+    it("POST / posts a new journey", () => {
+      return request
+        .post(`/api/journeys/`)
+        .send({
+          user: "normanhaze",
+          route: [
+            {
+              latLng: {
+                latitude: 53.4868444,
+                longitude: -2.2407841
+              },
+              strokeWidth: 1,
+              strokeColor: "#FFA500",
+              newSection: "true"
             },
-            strokeWidth: 1,
-            strokeColor: "#FFA500",
-            newSection: "true"
-          },
-          {
-            latLng: {
-              latitude: 53.4862066,
-              longitude: -2.2412136
-            },
-            strokeWidth: 2,
-            strokeColor: "#FFA500",
-            newSection: "false"
-          }
-        ]
-      })
-      .expect(201)
-      .then(res => {
-        expect(res.body.journey.route[1].strokeColor).to.equal("#FFA500");
-      });
+            {
+              latLng: {
+                latitude: 53.4862066,
+                longitude: -2.2412136
+              },
+              strokeWidth: 2,
+              strokeColor: "#FFA500",
+              newSection: "false"
+            }
+          ]
+        })
+        .expect(201)
+        .then(res => {
+          expect(res.body.journey.route[1].strokeColor).to.equal("#FFA500");
+        });
+    });
+    it("POST /journeys responds with a 400 BAD REQUEST when not following the schema", () => {
+      return request
+        .post(`/api/journeys/`)
+        .send({
+          route: []
+        })
+        .expect(400)
+        .then(res => {
+          expect(res.body.message).to.equal(
+            "journeys validation failed: user: true"
+          );
+        });
+    });
+    it("DELETE", () => {
+      return request
+        .delete(`/api/journeys/${journeyDocs[2]._id}`)
+        .expect(200)
+        .then(res => {
+          expect(res.body.journey.user).to.equal("crylittlesister");
+        });
+    });
+    it("returns a 404 when given an id not associated to a journey", () => {
+      return request
+        .delete(`/api/journeys/${userDocs[2]._id}`)
+        .expect(404)
+        .then(res => {
+          expect(res.body.message).to.equal(
+            `Journey ${userDocs[2]._id} not found`
+          );
+        });
+    });
+    it("returns a 400 when given an incorrect journey id format", () => {
+      return request
+        .delete(`/api/journeys/myJourney`)
+        .expect(400)
+        .then(res => {
+          expect(res.body.message).to.equal(
+            'Cast to ObjectId failed for value "myJourney" at path "_id" for model "journeys"'
+          );
+        });
+    });
   });
-  it("POST /journeys responds with a 400 BAD REQUEST when not following the schema", () => {
-    return request
-      .post(`/api/journeys/`)
-      .send({
-        user: "normanhaze"
-      })
-      .expect(400)
-      .then(res => {
-        expect(res.body.message).to.equal("please include all required fields");
-      });
-  });
-  it("DELETE", () => {
-    return request
-      .delete(`/api/journeys/${journeyDocs[2]._id}`)
-      .expect(202)
-      .then(res => {
-        expect(res.body.user).to.equal("crylittlesister");
-      });
-  });
-  it("returns a 404 when given an id not associated to a journey", () => {
-    return request
-      .delete(`/api/journeys/${userDocs[2]._id}`)
-      .expect(404)
-      .then(res => {
-        expect(res.body.message).to.equal(
-          `journey ${userDocs[2]._id} not found`
-        );
-      });
-  });
-  it("returns a 400 when given an incorrect journey id format", () => {
-    return request
-      .delete(`/api/journeys/myJourney`)
-      .expect(400)
-      .then(res => {
-        expect(res.body.message).to.equal("invalid ID format");
-      });
-  });
-});
 
-describe("/users", () => {
-  it("GET / returns all users ", () => {
-    return request
-      .get("/api/users")
-      .expect(200)
-      .then(res => {
-        expect(res.body.users.length).to.equal(6);
-        expect(res.body.users[5].username).to.equal("sylfie");
-      });
-  });
-  it("/:username", () => {
-    return request
-      .get("/api/users/louillustrator")
-      .expect(200)
-      .then(res => {
-        expect(res.body.user).to.have.all.keys(
-          "username",
-          "password",
-          "_id",
-          "__v"
-        );
-        expect(res.body.user.password).to.equal("lunchbox");
-      });
-  });
-  it("/:username returns a 404 PAGE NOT FOUND when inputting a username which does not exist", () => {
-    return request
-      .get("/api/helloKitty/")
-      .expect(404)
-      .then(res => {
-        expect(res.body.message).to.equal("user helloKitty not found");
-      });
-  });
-  it("GET /:username/journeys returns all journeys made by a particular user", () => {
-    return request
-      .get("/api/RobD33/journeys")
-      .expect(200)
-      .then(res => {
-        expect(res.body.journeys.length).to.equal(2);
-        expect(res.body.journeys[1].route[0].latLng.latitude).to.equal(
-          53.485703
-        );
-      });
-  });
-  it("GET /:username/journeys responds with a 404 when inputting an incorrect username", () => {
-    return request
-      .get("/api/helloKitty/journeys")
-      .expect(404)
-      .then(res => {
-        expect(res.body.message).to.equal("user helloKitty not found");
-      });
+  describe("/users", () => {
+    it("GET / returns all users ", () => {
+      return request
+        .get("/api/users")
+        .expect(200)
+        .then(res => {
+          expect(res.body.allUsers.length).to.equal(6);
+          expect(res.body.allUsers[5].username).to.equal("sylfie");
+        });
+    });
+    it("GET /:username returns the correct user", () => {
+      return request
+        .get("/api/users/louillustrator")
+        .expect(200)
+        .then(res => {
+          expect(res.body.user).to.have.all.keys(
+            "username",
+            "password",
+            "_id",
+            "__v"
+          );
+          expect(res.body.user.password).to.equal("lunchbox");
+        });
+    });
+    it("/:username returns a 404 PAGE NOT FOUND when inputting a username which does not exist", () => {
+      return request
+        .get("/api/helloKitty/")
+        .expect(404)
+        .then(res => {
+          expect(res.body.message).to.equal("Page Not Found");
+        });
+    });
+    it("GET /:username/journeys returns all journeys made by a particular user", () => {
+      return request
+        .get("/api/users/robd33/journeys")
+        .expect(200)
+        .then(res => {
+          expect(res.body.journeys.length).to.equal(2);
+          expect(res.body.journeys[1].route[0].latLng.latitude).to.equal(
+            53.485703
+          );
+        });
+    });
+    it("GET /:username/journeys responds with a 404 when inputting an incorrect username", () => {
+      return request
+        .get("/api/helloKitty/journeys")
+        .expect(404)
+        .then(res => {
+          expect(res.body.message).to.equal("Page Not Found");
+        });
+    });
   });
 });
