@@ -5,7 +5,7 @@ const request = require("supertest")(app);
 const seedDB = require("../seed/seed.js");
 const mongoose = require("mongoose");
 const userData = require("../seed/data/users");
-const journeyData = require("../seed/data/journies");
+const journeyData = require("../seed/data/journeys");
 
 describe("/API", () => {
   let journeyDocs, userDocs;
@@ -36,20 +36,20 @@ describe("/API", () => {
       .then(res => expect(res.body.message).to.equal("Page Not Found"));
   });
 });
-describe("/journies", () => {
-  it("GET / responds with all journies", () => {
+describe("/journeys", () => {
+  it("GET / responds with all journeys", () => {
     return request
-      .get("/api/journies")
+      .get("/api/journeys")
       .expect(200)
       .then(res => {
-        expect(res.body.journies.length).to.equal(3);
-        expect(res.body.journies[1]).to.have.all.keys(
+        expect(res.body.journeys.length).to.equal(3);
+        expect(res.body.journeys[1]).to.have.all.keys(
           "user",
           "route",
           "_id",
           "__v"
         );
-        expect(res.body.journies[2].journey[0]).to.have.all.keys(
+        expect(res.body.journeys[2].journey[0]).to.have.all.keys(
           "LatLng",
           "strokeWidth",
           "strokeColor",
@@ -59,7 +59,7 @@ describe("/journies", () => {
   });
   it("GET /:journey_id responds with the correct journey", () => {
     return request
-      .get(`/api/journies/${journeyDocs[1]._id}`)
+      .get(`/api/journeys/${journeyDocs[2]._id}`)
       .expect(200)
       .then(res => {
         expect(res.body.journey).to.have.all.keys(
@@ -71,11 +71,41 @@ describe("/journies", () => {
         expect(res.body.journey.user).to.equal("CryLittleSister");
       });
   });
-  it("GET /:username returns all journies made by a particular user", () => {
+  it("GET /journey_id responds with a 404 when inputting an incorrect journey id", () => {
     return request
-      .get(`/api/journies/`)
+      .get(`/api/journeys/${userDocs[1]._id}`)
+      .expect(404)
+      .then(res => {
+        expect(res.body.message).to.equal(
+          `journey ${userDocs[1]._id} not found`
+        );
+      });
+  });
+  it("GET /:journey_id responds with a 400 when inputting an incorrect journey id format", () => {
+    return request
+      .get(`/api/journeys/myJourney`)
+      .expect(400)
+      .then(res => {
+        expect(res.body.message).to.equal("invalid ID format");
+      });
+  });
+  it("GET /:username returns all journeys made by a particular user", () => {
+    return request
+      .get("/api/journeys/RobD33")
       .expect(200)
-      .then(res => {});
-    expect().to.equal();
+      .then(res => {
+        expect(res.body.journeys.length).to.equal(2);
+        expect(res.body.journeys[1].route[0].latLng.latitude).to.equal(
+          53.485703
+        );
+      });
+  });
+  it("GET /:username responds with a 404 when inputting an incorrect username", () => {
+    return request
+      .get("/api/journeys/helloKitty")
+      .expect(404)
+      .then(res => {
+        expect(res.body.message).to.equal("user helloKitty not found");
+      });
   });
 });
