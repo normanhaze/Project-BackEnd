@@ -21,7 +21,7 @@ describe("/API", () => {
   });
 
   it("returns the first user", () => {
-    expect(userDocs[0].username).to.equal("Normanhaze");
+    expect(userDocs[0].username).to.equal("normanhaze");
   });
   it('GET a 404 PAGE NOT FOUND when skipping the "api" route', () => {
     return request
@@ -36,6 +36,7 @@ describe("/API", () => {
       .then(res => expect(res.body.message).to.equal("Page Not Found"));
   });
 });
+
 describe("/journeys", () => {
   it("GET / responds with all journeys", () => {
     return request
@@ -89,9 +90,112 @@ describe("/journeys", () => {
         expect(res.body.message).to.equal("invalid ID format");
       });
   });
-  it("GET /:username returns all journeys made by a particular user", () => {
+
+  it("POST / posts a new journey", () => {
     return request
-      .get("/api/journeys/RobD33")
+      .post(`/api/journeys/`)
+      .send({
+        user: "normanhaze",
+        route: [
+          {
+            latLng: {
+              latitude: 53.4868444,
+              longitude: -2.2407841
+            },
+            strokeWidth: 1,
+            strokeColor: "#FFA500",
+            newSection: "true"
+          },
+          {
+            latLng: {
+              latitude: 53.4862066,
+              longitude: -2.2412136
+            },
+            strokeWidth: 2,
+            strokeColor: "#FFA500",
+            newSection: "false"
+          }
+        ]
+      })
+      .expect(201)
+      .then(res => {
+        expect(res.body.journey.route[1].strokeColor).to.equal("#FFA500");
+      });
+  });
+  it("POST /journeys responds with a 400 BAD REQUEST when not following the schema", () => {
+    return request
+      .post(`/api/journeys/`)
+      .send({
+        user: "normanhaze"
+      })
+      .expect(400)
+      .then(res => {
+        expect(res.body.message).to.equal("please include all required fields");
+      });
+  });
+  it("DELETE", () => {
+    return request
+      .delete(`/api/journeys/${journeyDocs[2]._id}`)
+      .expect(202)
+      .then(res => {
+        expect(res.body.user).to.equal("crylittlesister");
+      });
+  });
+  it("returns a 404 when given an id not associated to a journey", () => {
+    return request
+      .delete(`/api/journeys/${userDocs[2]._id}`)
+      .expect(404)
+      .then(res => {
+        expect(res.body.message).to.equal(
+          `journey ${userDocs[2]._id} not found`
+        );
+      });
+  });
+  it("returns a 400 when given an incorrect journey id format", () => {
+    return request
+      .delete(`/api/journeys/myJourney`)
+      .expect(400)
+      .then(res => {
+        expect(res.body.message).to.equal("invalid ID format");
+      });
+  });
+});
+
+describe("/users", () => {
+  it("GET / returns all users ", () => {
+    return request
+      .get("/api/users")
+      .expect(200)
+      .then(res => {
+        expect(res.body.users.length).to.equal(6);
+        expect(res.body.users[5].username).to.equal("sylfie");
+      });
+  });
+  it("/:username", () => {
+    return request
+      .get("/api/users/louillustrator")
+      .expect(200)
+      .then(res => {
+        expect(res.body.user).to.have.all.keys(
+          "username",
+          "password",
+          "_id",
+          "__v"
+        );
+        expect(res.body.user.password).to.equal("lunchbox");
+      });
+  });
+  it("/:username returns a 404 PAGE NOT FOUND when inputting a username which does not exist", () => {
+    return request
+      .get("/api/helloKitty/")
+      .expect(404)
+      .then(res => {
+        expect(res.body.message).to.equal("user helloKitty not found");
+      });
+  });
+  it("GET /:username/journeys returns all journeys made by a particular user", () => {
+    return request
+      .get("/api/RobD33/journeys")
       .expect(200)
       .then(res => {
         expect(res.body.journeys.length).to.equal(2);
@@ -100,9 +204,9 @@ describe("/journeys", () => {
         );
       });
   });
-  it("GET /:username responds with a 404 when inputting an incorrect username", () => {
+  it("GET /:username/journeys responds with a 404 when inputting an incorrect username", () => {
     return request
-      .get("/api/journeys/helloKitty")
+      .get("/api/helloKitty/journeys")
       .expect(404)
       .then(res => {
         expect(res.body.message).to.equal("user helloKitty not found");
