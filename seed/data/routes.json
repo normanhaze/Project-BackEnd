@@ -1,0 +1,130 @@
+[
+    {
+       "user": "Normanhaze",
+       "route": [
+            {
+                "latLng": {
+                    "latitude": 53.482383, 
+                    "longitude": -2.232178
+                },
+                "strokeWidth": 2,
+                "strokeColor": "#FF000",
+                "newSection": "true"
+            },
+            {
+                "latLng": {
+                    "latitude": 53.483494, 
+                    "longitude": -2.230649
+                },
+                "strokeWidth": 2,
+                "strokeColor": "#FF000",
+                "newSection": "false"
+            },
+            {
+                "latLng": {
+                    "latitude": 53.484656,  
+                    "longitude": -2.232666
+                },
+                "strokeWidth": 2,
+                "strokeColor": "#FF000",
+                "newSection": "false"
+            },
+            {
+                "latLng": {
+                    "latitude": 53.483807,  
+                    "longitude": -2.233900 
+                },
+                "strokeWidth": 2,
+                "strokeColor": "#FF000",
+                "newSection": "false"
+            }
+       ]
+    },
+    {
+        "user": "CryLittleSister",
+        "route": [
+             {
+                 "latLng": {
+                     "latitude": 53.485237, 
+                     "longitude": -2.237226
+                 },
+                 "strokeColor": "#0000FF",
+                 "newSection": "true"
+             },
+             {
+                 "latLng": {
+                     "latitude": 53.484401,
+                     "longitude": -2.237269 
+                 },
+                 "strokeColor": "#0000FF",
+                 "newSection": "false"
+             },
+             {
+                 "latLng": {
+                     "latitude": 53.484101,  
+                     "longitude": -2.238256 
+                 },
+                 "strokeColor": "#008000",
+                 "newSection": "false"
+             },
+             {
+                 "latLng": {
+                     "latitude": 53.483909,  
+                     "longitude": -2.237999
+                 },
+                 "strokeColor": "#008000",
+                 "newSection": "false"
+             }
+        ]
+     },
+     {
+        "user": "RobD33",
+        "route": [
+             {
+                 "latLng": {
+                     "latitude": 53.485703, 
+                     "longitude": -2.237001 
+                 },
+                 "strokeWidth": 1,
+                 "strokeColor": "#FFA500",
+                 "newSection": "true"
+             },
+             {
+                 "latLng": {
+                     "latitude": 53.485486, 
+                     "longitude": -2.237419 
+                 },
+                 "strokeWidth": 2,
+                 "strokeColor": "#FFA500",
+                 "newSection": "false"
+             },
+             {
+                 "latLng": {
+                     "latitude": 53.485352,  
+                     "longitude": -2.237687  
+                 },
+                 "strokeWidth": 3,
+                 "strokeColor": "#800080",
+                 "newSection": "false"
+             },
+             {
+                 "latLng": {
+                     "latitude": 53.484975, 
+                     "longitude": -2.238438  
+                 },
+                 "strokeWidth": 3,
+                 "strokeColor": "#40E0D0",
+                 "newSection": "false"
+             },
+             {
+                "latLng": {
+                    "latitude": 53.484898, 
+                    "longitude": -2.238610
+                },
+                "strokeWidth": 2,
+                "strokeColor": "#40E0D0",
+                "newSection": "false"
+            }
+        ]
+     }  
+]
