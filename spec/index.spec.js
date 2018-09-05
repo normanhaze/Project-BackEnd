@@ -54,7 +54,6 @@ describe("/API", () => {
             "latLng",
             "strokeWidth",
             "strokeColor",
-            "newSection",
             "_id"
           );
         });
@@ -102,28 +101,24 @@ describe("/API", () => {
           user: "normanhaze",
           route: [
             {
-              latLng: {
-                latitude: 53.4868444,
-                longitude: -2.2407841
-              },
               strokeWidth: 1,
               strokeColor: "#FFA500",
-              newSection: "true"
-            },
-            {
-              latLng: {
-                latitude: 53.4862066,
-                longitude: -2.2412136
-              },
-              strokeWidth: 2,
-              strokeColor: "#FFA500",
-              newSection: "false"
+              latLng: [
+                {
+                  latitude: 53.4868444,
+                  longitude: -2.2407841
+                },
+                {
+                  latitude: 53.4862066,
+                  longitude: -2.2412136
+                },
+              ]  
             }
           ]
         })
         .expect(201)
         .then(res => {
-          expect(res.body.journey.route[1].strokeColor).to.equal("#FFA500");
+          expect(res.body.journey.route[0].strokeColor).to.equal("#FFA500");
         });
     });
     it("POST /journeys responds with a 400 BAD REQUEST when not following the schema", () => {
@@ -135,7 +130,65 @@ describe("/API", () => {
         .expect(400)
         .then(res => {
           expect(res.body.message).to.equal(
-            "journeys validation failed: user: true"
+            "journeys validation failed: user: Path `user` is required."
+          );
+        });
+    });
+    it("POST /journeys responds with a 400 BAD REQUEST when incorrect data type is provided", () => {
+      return request
+        .post(`/api/journeys/`)
+        .send({
+          user: "crylittlesister",
+          route: [
+            {
+              strokeWidth: "hello"
+              }
+          ]
+        })
+        .expect(400)
+        .then(res => {
+          expect(res.body.message).to.equal(
+            'journeys validation failed: route.0.strokeWidth: Cast to Number failed for value "hello" at path "strokeWidth"'
+          );
+        });
+    });
+    it("POST /journeys responds with a 400 BAD REQUEST when nested objects are not following the schema", () => {
+      return request
+        .post(`/api/journeys/`)
+        .send({
+          user: "crylittlesister",
+          route: [
+            {
+              latLng: {
+                height: 200,
+                width: 100
+              }
+            }
+          ]
+        })
+        .expect(400)
+        .then(res => {
+          expect(res.body.message).to.equal(
+            "journeys validation failed: route.0.latLng.0.longitude: Path `longitude` is required., route.0.latLng.0.latitude: Path `latitude` is required."
+          );
+        });
+    });
+    it.only("POST /journeys responds with a 400 BAD REQUEST when required keys for nested objects are not provided", () => {
+      return request
+        .post(`/api/journeys/`)
+        .send({
+          user: "crylittlesister",
+          route: [
+            {
+              strokeWidth: 2
+            }
+          ]
+        })
+        .expect(400)
+        .then(res => {
+          //console.log(res.body.journey.route)
+          expect(res.body.message).to.equal(
+            "journeys validation failed: route.0.latLng: Path `latLng` is required."
           );
         });
     });
@@ -207,7 +260,7 @@ describe("/API", () => {
         .expect(200)
         .then(res => {
           expect(res.body.journeys.length).to.equal(2);
-          expect(res.body.journeys[1].route[0].latLng.latitude).to.equal(
+          expect(res.body.journeys[1].route[0].latLng[0].latitude).to.equal(
             53.485703
           );
         });
