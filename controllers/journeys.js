@@ -24,10 +24,11 @@ const getJourneyById = (req, res, next) => {
 };
 
 const addJourney = (req, res, next) => {
+  if (!req.body.user) throw { status: 400, message: "journeys validation failed: user: Path `user` is required."}
   User.find({ username: req.body.user })
     .then(user => {
-      if (user === null)
-        throw { status: 404, message: `User ${username} not found` };
+      if (!user.length) 
+        throw { status: 404, message: `User ${req.body.user} not found` };
       return Journey.create(req.body);
     })
     .then(journey => {

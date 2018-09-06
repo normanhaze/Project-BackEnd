@@ -118,7 +118,35 @@ describe("/API", () => {
         })
         .expect(201)
         .then(res => {
+          expect(res.body.message).to.equal("Journey added!");
           expect(res.body.journey.route[0].strokeColor).to.equal("#FFA500");
+        });
+    });
+    it("POST / returns a 404 for a post request for a user that doesn't exist", () => {
+      return request
+        .post(`/api/journeys/`)
+        .send({
+          user: "timmy",
+          route: [
+            {
+              strokeWidth: 1,
+              strokeColor: "#FFA500",
+              latLng: [
+                {
+                  latitude: 53.4868444,
+                  longitude: -2.2407841
+                },
+                {
+                  latitude: 53.4862066,
+                  longitude: -2.2412136
+                },
+              ]  
+            }
+          ]
+        })
+        .expect(404)
+        .then(res => {
+          expect(res.body.message).to.equal("User timmy not found");
         });
     });
     it("POST /journeys responds with a 400 BAD REQUEST when not following the schema", () => {
@@ -141,8 +169,18 @@ describe("/API", () => {
           user: "crylittlesister",
           route: [
             {
-              strokeWidth: "hello"
-              }
+              strokeWidth: "hello",
+              latLng: [
+                {
+                  latitude: 53.4868444,
+                  longitude: -2.2407841
+                },
+                {
+                  latitude: 53.4862066,
+                  longitude: -2.2412136
+                }
+              ]
+            }
           ]
         })
         .expect(400)
@@ -173,7 +211,7 @@ describe("/API", () => {
           );
         });
     });
-    it.only("POST /journeys responds with a 400 BAD REQUEST when required keys for nested objects are not provided", () => {
+    it("POST /journeys responds with a 400 BAD REQUEST when required keys for nested objects are not provided", () => {
       return request
         .post(`/api/journeys/`)
         .send({
@@ -186,7 +224,6 @@ describe("/API", () => {
         })
         .expect(400)
         .then(res => {
-          //console.log(res.body.journey.route)
           expect(res.body.message).to.equal(
             "journeys validation failed: route.0.latLng: Path `latLng` is required."
           );
@@ -223,13 +260,13 @@ describe("/API", () => {
   });
 
   describe("/users", () => {
-    it("GET / returns all users ", () => {
+    it("GET / returns all usernames ", () => {
       return request
         .get("/api/users")
         .expect(200)
         .then(res => {
-          expect(res.body.allUsers.length).to.equal(6);
-          expect(res.body.allUsers[5].username).to.equal("sylfie");
+          expect(res.body.allUsernames.length).to.equal(6);
+          expect(res.body.allUsernames[5]).to.equal("sylfie");
         });
     });
     it("GET /:username returns the correct user", () => {
@@ -237,16 +274,26 @@ describe("/API", () => {
         .get("/api/users/louillustrator")
         .expect(200)
         .then(res => {
-          expect(res.body.user).to.have.all.keys(
-            "username",
-            "password",
-            "_id",
-            "__v"
-          );
-          expect(res.body.user.password).to.equal("lunchbox");
+          expect(res.body.user).to.equal("louillustrator");
         });
     });
-    it("/:username returns a 404 PAGE NOT FOUND when inputting a username which does not exist", () => {
+    it("GET /:username with password query returns 200 for correct password", () => {
+      return request
+        .get("/api/users/louillustrator?password=lunchbox")
+        .expect(200)
+        .then(res => {
+          expect(res.body.message).to.equal("Password accepted");
+        });
+    });
+    it("GET /:username with password query returns 400 for incorrect password", () => {
+      return request
+        .get("/api/users/louillustrator?password=somepassword")
+        .expect(400)
+        .then(res => {
+          expect(res.body.message).to.equal("Incorrect password");
+        });
+    });
+    it("GET /:username returns a 404 PAGE NOT FOUND when inputting a username which does not exist", () => {
       return request
         .get("/api/helloKitty/")
         .expect(404)
@@ -271,6 +318,31 @@ describe("/API", () => {
         .expect(404)
         .then(res => {
           expect(res.body.message).to.equal("Page Not Found");
+        });
+    });
+    it("POST / posts a new user", () => {
+      return request
+        .post(`/api/users/`)
+        .send({
+          username: "archieawesome",
+          password: "iamawesome"
+        })
+        .expect(201)
+        .then(res => {
+          expect(res.body.message).to.equal("User added!");
+          expect(res.body.user).to.equal("archieawesome");
+        });
+    });
+    it("POST / user not added if username already exists in database", () => {
+      return request
+        .post(`/api/users/`)
+        .send({
+          username: "sylfie",
+          password: "greetings"
+        })
+        .expect(400)
+        .then(res => {
+          expect(res.body.message).to.equal("User sylfie already exists");
         });
     });
   });

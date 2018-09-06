@@ -1,6 +1,7 @@
 { "API Endpoints": {
     "GET /api/users" : "Get all users",
     "GET /api/users/:username" : "Get user by username",
+    "GET /api/users/:username?password=:password" : "returns 200 for a valid password, 400 for an incorrect one",
     "GET /api/users/:username/journeys" : "Get all journeys for a user",
     "GET /api/journeys" : "Get all journeys",
     "POST /api/journeys" : "Add a new journey. Takes the following keys: user, image (url string - optional), previous versions (array of mongoIDs, optional), route (array of objects with the following keys: latLang (object with latitude and longitude keys), timestamp (optional), strokeWidth (integer, optional), strokeColor (hex code, optional), newSection (boolean)",
