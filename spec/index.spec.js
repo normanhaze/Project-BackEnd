@@ -52,8 +52,8 @@ describe("/API", () => {
           );
           expect(res.body.allJourneys[3].route[0]).to.have.all.keys(
             "latLng",
-            "strokeWidth",
-            "strokeColor",
+            "width",
+            "colour",
             "_id"
           );
         });
@@ -101,8 +101,8 @@ describe("/API", () => {
           user: "normanhaze",
           route: [
             {
-              strokeWidth: 1,
-              strokeColor: "#FFA500",
+              width: 1,
+              colour: "#FFA500",
               latLng: [
                 {
                   latitude: 53.4868444,
@@ -111,15 +111,15 @@ describe("/API", () => {
                 {
                   latitude: 53.4862066,
                   longitude: -2.2412136
-                },
-              ]  
+                }
+              ]
             }
           ]
         })
         .expect(201)
         .then(res => {
           expect(res.body.message).to.equal("Journey added!");
-          expect(res.body.journey.route[0].strokeColor).to.equal("#FFA500");
+          expect(res.body.journey.route[0].colour).to.equal("#FFA500");
         });
     });
     it("POST / returns a 404 for a post request for a user that doesn't exist", () => {
@@ -129,8 +129,8 @@ describe("/API", () => {
           user: "timmy",
           route: [
             {
-              strokeWidth: 1,
-              strokeColor: "#FFA500",
+              width: 1,
+              colour: "#FFA500",
               latLng: [
                 {
                   latitude: 53.4868444,
@@ -139,8 +139,8 @@ describe("/API", () => {
                 {
                   latitude: 53.4862066,
                   longitude: -2.2412136
-                },
-              ]  
+                }
+              ]
             }
           ]
         })
@@ -169,7 +169,7 @@ describe("/API", () => {
           user: "crylittlesister",
           route: [
             {
-              strokeWidth: "hello",
+              width: "hello",
               latLng: [
                 {
                   latitude: 53.4868444,
@@ -186,7 +186,7 @@ describe("/API", () => {
         .expect(400)
         .then(res => {
           expect(res.body.message).to.equal(
-            'journeys validation failed: route.0.strokeWidth: Cast to Number failed for value "hello" at path "strokeWidth"'
+            'journeys validation failed: route.0.width: Cast to Number failed for value "hello" at path "width"'
           );
         });
     });
@@ -218,7 +218,7 @@ describe("/API", () => {
           user: "crylittlesister",
           route: [
             {
-              strokeWidth: 2
+              width: 2
             }
           ]
         })

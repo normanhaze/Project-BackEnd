@@ -3,9 +3,9 @@
     "user": "normanhaze",
     "route": [
       {
-        "strokeWidth": 2,
-        "strokeColor": "#FF000",
-        "latLng" : [
+        "width": 2,
+        "colour": "#FF000",
+        "latLng": [
           {
             "latitude": 53.482383,
             "longitude": -2.232178
@@ -23,15 +23,15 @@
             "longitude": -2.2339
           }
         ]
-      } 
+      }
     ]
   },
   {
     "user": "robd33",
     "route": [
       {
-        "strokeWidth": 1,
-        "strokeColor": "#FFA500",
+        "width": 1,
+        "colour": "#FFA500",
         "latLng": [
           {
             "latitude": 53.4808118,
@@ -44,8 +44,8 @@
         ]
       },
       {
-        "strokeWidth": 2,
-        "strokeColor": "#FFA500",
+        "width": 2,
+        "colour": "#FFA500",
         "latLng": [
           {
             "latitude": 53.4814175,
@@ -62,8 +62,8 @@
         ]
       },
       {
-        "strokeWidth": 3,
-        "strokeColor": "#800080",
+        "width": 3,
+        "colour": "#800080",
         "latLng": [
           {
             "latitude": 53.4809602,
@@ -81,7 +81,7 @@
     "user": "crylittlesister",
     "route": [
       {
-        "strokeColor": "#0000FF",
+        "colour": "#0000FF",
         "latLng": [
           {
             "latitude": 53.485237,
@@ -94,12 +94,12 @@
         ]
       },
       {
-        "strokeColor": "#0000FF",
+        "colour": "#0000FF",
         "latLng": [
           {
             "latitude": 53.484101,
             "longitude": -2.238256
-          }, 
+          },
           {
             "latitude": 53.483909,
             "longitude": -2.237999
@@ -112,8 +112,8 @@
     "user": "robd33",
     "route": [
       {
-        "strokeWidth": 2,
-        "strokeColor": "#FFA500",
+        "width": 2,
+        "colour": "#FFA500",
         "latLng": [
           {
             "latitude": 53.485703,
@@ -130,8 +130,8 @@
         ]
       },
       {
-        "strokeWidth": 3,
-        "strokeColor": "#FFA500",
+        "width": 3,
+        "colour": "#FFA500",
         "latLng": [
           {
             "latitude": 53.485352,
@@ -142,10 +142,10 @@
             "longitude": -2.238438
           }
         ]
-      }, 
+      },
       {
-        "strokeWidth": 3,
-        "strokeColor": "#800080",
+        "width": 3,
+        "colour": "#800080",
         "latLng": [
           {
             "latitude": 53.484898,
