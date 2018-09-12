@@ -1,6 +1,6 @@
 { "API Endpoints": {
     "GET /api/users" : "Get all users",
-    "POST /api/users" : "Add a new user. Requires the following keys: username, password. Username must be unique",
+    "POST /api/users" : "Add a new user. Requires the following keys: username, password. Username must be unique and should be lowercase",
     "GET /api/users/:username" : "Get user by username",
     "GET /api/users/:username?password=:password" : "Returns 200 for a valid password, 400 for an incorrect one",
     "GET /api/users/:username/journeys" : "Get all journeys for a user",
