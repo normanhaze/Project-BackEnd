@@ -1,0 +1,225 @@
+[
+  {
+    "user": "normanhaze",
+    "route": [
+      {
+        "width": 2,
+        "colour": "#FF000",
+        "latLng": [
+          {
+            "latitude": 53.482383,
+            "longitude": -2.232178
+          },
+          {
+            "latitude": 53.483494,
+            "longitude": -2.230649
+          },
+          {
+            "latitude": 53.484656,
+            "longitude": -2.232666
+          },
+          {
+            "latitude": 53.483807,
+            "longitude": -2.2339
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "user": "louillustrator",
+    "route": [
+      {
+        "colour": "#3600ff",
+        "width": 10,
+        "latLng": [
+          {
+            "latitude": 53.48589317946209,
+            "longitude": -2.23991071397389
+          },
+          {
+            "latitude": 53.48589317946209,
+            "longitude": -2.23991071397389
+          },
+          {
+            "latitude": 53.485914552431296,
+            "longitude": -2.2399334716223964
+          },
+          {
+            "latitude": 53.485914552431296,
+            "longitude": -2.2399334716223964
+          }
+        ]
+      },
+      {
+        "colour": "#ff00cc",
+        "width": 10,
+        "latLng": [
+          {
+            "latitude": 53.485914552431296,
+            "longitude": -2.2399334716223964
+          },
+          {
+            "latitude": 53.485849915813255,
+            "longitude": -2.2397570083531706
+          },
+          {
+            "latitude": 53.48581240747973,
+            "longitude": -2.239692992796895
+          },
+          {
+            "latitude": 53.48581240747973,
+            "longitude": -2.239692992796895
+          }
+        ]
+      },
+      {
+        "colour": "#ffd900",
+        "width": 10,
+        "latLng": [
+          {
+            "latitude": 53.48581240747973,
+            "longitude": -2.239692992796895
+          },
+          {
+            "latitude": 53.48579257108703,
+            "longitude": -2.239638602697876
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "user": "robd33",
+    "route": [
+      {
+        "width": 1,
+        "colour": "#FFA500",
+        "latLng": [
+          {
+            "latitude": 53.4808118,
+            "longitude": -2.2480191
+          },
+          {
+            "latitude": 53.4814175,
+            "longitude": -2.24761
+          }
+        ]
+      },
+      {
+        "width": 2,
+        "colour": "#FFA500",
+        "latLng": [
+          {
+            "latitude": 53.4814175,
+            "longitude": -2.24761
+          },
+          {
+            "latitude": 53.4815719,
+            "longitude": -2.2483909
+          },
+          {
+            "latitude": 53.4809602,
+            "longitude": -2.2486614
+          }
+        ]
+      },
+      {
+        "width": 3,
+        "colour": "#800080",
+        "latLng": [
+          {
+            "latitude": 53.4809602,
+            "longitude": -2.2486614
+          },
+          {
+            "latitude": 53.4807914,
+            "longitude": -2.2480402
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "user": "crylittlesister",
+    "route": [
+      {
+        "colour": "#0000FF",
+        "latLng": [
+          {
+            "latitude": 53.485237,
+            "longitude": -2.237226
+          },
+          {
+            "latitude": 53.484401,
+            "longitude": -2.237269
+          }
+        ]
+      },
+      {
+        "colour": "#0000FF",
+        "latLng": [
+          {
+            "latitude": 53.484101,
+            "longitude": -2.238256
+          },
+          {
+            "latitude": 53.483909,
+            "longitude": -2.237999
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "user": "robd33",
+    "route": [
+      {
+        "width": 2,
+        "colour": "#FFA500",
+        "latLng": [
+          {
+            "latitude": 53.485703,
+            "longitude": -2.237001
+          },
+          {
+            "latitude": 53.485486,
+            "longitude": -2.237419
+          },
+          {
+            "latitude": 53.485352,
+            "longitude": -2.237687
+          }
+        ]
+      },
+      {
+        "width": 3,
+        "colour": "#FFA500",
+        "latLng": [
+          {
+            "latitude": 53.485352,
+            "longitude": -2.237687
+          },
+          {
+            "latitude": 53.484975,
+            "longitude": -2.238438
+          }
+        ]
+      },
+      {
+        "width": 3,
+        "colour": "#800080",
+        "latLng": [
+          {
+            "latitude": 53.484898,
+            "longitude": -2.23861
+          },
+          {
+            "latitude": 53.485703,
+            "longitude": -2.237001
+          }
+        ]
+      }
+    ]
+  }
+]

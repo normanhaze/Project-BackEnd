@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 const User = require('../models/User');
-const Route = require('../models/Route');
+const Journey = require('../models/Journey');
 
-const seedDB = (userData, routeData) => {
+const seedDB = (userData, journeyData) => {
     return mongoose.connection.dropDatabase()
     .then(() => {
         return Promise.all([
             User.insertMany(userData),
-            Route.insertMany(routeData) 
+            Journey.insertMany(journeyData) 
         ]);  
     });
 };
